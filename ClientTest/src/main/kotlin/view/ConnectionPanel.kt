@@ -20,20 +20,25 @@ class ConnectionPanel: JPanel() {
   }
 
   inner class PortInput: JPanel() {
-    private val gridBagConstraints: GridBagConstraints = GridBagConstraints()
-
-    private val portTextField: JTextField = JTextField(20)
+    private val gridBagConstraints = GridBagConstraints()
+    private val portTextField = JTextField(20)
 
     init {
       this.layout = GridBagLayout()
-      this.border = TitledBorder("Port").also {
-        it.titleFont = Font("SansSerif", Font.PLAIN, 16)
-      }
       this.gridBagConstraints.gridx = 0
       this.gridBagConstraints.gridy = 0
       this.gridBagConstraints.insets = Insets(5, 5, 5, 5)
 
       this.portTextField.font = Font("SansSerif", Font.PLAIN, 14)
+
+      this.add(
+        JLabel("Port").also {
+          it.font = Font("SansSerif", Font.BOLD, 16)
+        },
+        this.gridBagConstraints
+      )
+
+      this.gridBagConstraints.gridy++
 
       this.add(
         this.portTextField,
