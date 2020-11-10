@@ -1,0 +1,9 @@
+enum class StatusCodes {
+  SEND_GAME_CARD,
+  RECEIVE_IMAGE,
+  RECEIVE_STRING,
+  SEARCH_GAME,
+  FOUND_GAME,
+  GAME_NOT_FOUND,
+  ERROR
+}

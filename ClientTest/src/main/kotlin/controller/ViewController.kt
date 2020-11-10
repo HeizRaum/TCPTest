@@ -1,5 +1,6 @@
 package controller
 
+import model.GameCard
 import view.MainFrame
 import java.net.ConnectException
 
@@ -24,5 +25,9 @@ class ViewController private constructor() {
   fun changeToMainPanel() {
     mainFrame.remove(mainFrame.getConnectionPanel())
     mainFrame.add(mainFrame.getMainPanel())
+  }
+
+  fun showGameCardInSearchGamePopupFrame(gameCard: GameCard) {
+    mainFrame.getMainPanel().searchGamePopupFrame.setGameCardShown(gameCard)
   }
 }

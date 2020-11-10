@@ -1,16 +1,15 @@
 package view
 
+import controller.ClientController
 import model.GameCard
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import java.awt.image.BufferedImage
-import java.io.FileFilter
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
 
-class AddGameInnerFrame : JFrame("Add game") {
+class AddGamePopupFrame : JFrame("Add game") {
   init {
     this.initialize()
   }
@@ -25,7 +24,7 @@ class AddGameInnerFrame : JFrame("Add game") {
     this.revalidate()
   }
 
-  inner class AddGamePanel : JPanel(), MouseListener {
+  private inner class AddGamePanel : JPanel(), MouseListener {
     private val gridBagConstraints = GridBagConstraints()
 
     private val gameCard = GameCard
@@ -79,18 +78,24 @@ class AddGameInnerFrame : JFrame("Add game") {
     private fun loadGameImage() {
       val fileChooser = JFileChooser()
       fileChooser.fileFilter = FileNameExtensionFilter(
-        "JPG and PNG images",
-        "jpg", "png"
+        "PNG images",
+        "png"
       )
       if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        this.gameCard.image = ImageIO.read(fileChooser.selectedFile)
-        this.gameImagePanel.add(JLabel(ImageIcon(this.gameCard.image)))
+        this.gameCard.setImage(
+          ImageIO.read(fileChooser.selectedFile),
+          fileChooser.selectedFile.extension
+        )
+        this.gameImagePanel.add(JLabel(ImageIcon(this.gameCard.getImage())))
         this.gameImagePanel.revalidate()
       }
     }
 
     private fun addGame() {
       this.gameCard.name = this.gameNameTextField.text
+      if(!this.gameCard.isEmpty()) {
+        ClientController.instance.sendGameCardToServer(this.gameCard)
+      }
     }
   }
 }
